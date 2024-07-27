@@ -1,6 +1,5 @@
 import { Container, Title, TopBar } from "@/components/shared";
 import { Filters } from "@/components/shared/filters";
-import { ProductCard } from "@/components/shared/product-card";
 import { ProductsListGroup } from "@/components/shared/products-list-group";
 
 export default function Home() {
@@ -23,7 +22,7 @@ export default function Home() {
             <div className="flex flex-col gap-16">
               <ProductsListGroup
                 listClassName={""}
-                categoryId={"1"}
+                categoryId={1}
                 items={[
                   {
                     id: "1",
@@ -34,7 +33,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "2",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -42,7 +41,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "3",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -50,7 +49,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "4",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -58,7 +57,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "5",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -70,10 +69,10 @@ export default function Home() {
               />
               <ProductsListGroup
                 listClassName={""}
-                categoryId={"1"}
+                categoryId={2}
                 items={[
                   {
-                    id: "1",
+                    id: "6",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -81,7 +80,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "7",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -89,7 +88,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "8",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -97,7 +96,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "9",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -105,7 +104,7 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                   {
-                    id: "1",
+                    id: "10",
                     name: "Diabolla",
                     imageUrl:
                       "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
@@ -113,7 +112,54 @@ export default function Home() {
                     items: [{ price: 330 }],
                   },
                 ]}
-                title={"Burgers"}
+                title={"Combo"}
+              />
+              <ProductsListGroup
+                listClassName={""}
+                categoryId={3}
+                items={[
+                  {
+                    id: "6",
+                    name: "Diabolla",
+                    imageUrl:
+                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
+                    price: 330,
+                    items: [{ price: 330 }],
+                  },
+                  {
+                    id: "7",
+                    name: "Diabolla",
+                    imageUrl:
+                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
+                    price: 330,
+                    items: [{ price: 330 }],
+                  },
+                  {
+                    id: "8",
+                    name: "Diabolla",
+                    imageUrl:
+                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
+                    price: 330,
+                    items: [{ price: 330 }],
+                  },
+                  {
+                    id: "9",
+                    name: "Diabolla",
+                    imageUrl:
+                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
+                    price: 330,
+                    items: [{ price: 330 }],
+                  },
+                  {
+                    id: "10",
+                    name: "Diabolla",
+                    imageUrl:
+                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
+                    price: 330,
+                    items: [{ price: 330 }],
+                  },
+                ]}
+                title={"zakuski"}
               />
             </div>
           </div>
