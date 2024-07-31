@@ -6,7 +6,6 @@ generator client {
 datasource db {
     provider = "postgresql"
     url = env("POSTGRES_URL")
-    directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -17,6 +16,7 @@ model User {
     password String
 
     role UserRole @default(USER)
+    verified DateTime
 
     provider String?
     providerId String?
@@ -33,6 +33,9 @@ model Category {
     id Int @id @default(autoincrement())
     name String @unique
     products Product[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Product {
