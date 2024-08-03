@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Title } from "./title";
@@ -5,12 +6,20 @@ import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui";
 import { RangeSlider } from "./range-slider";
 import { CheckBoxFiltersGroup } from "./checkbox-filters-group";
+import { useFilterIngredients } from "@/hooks/useFilterIngridients";
 
 interface Props {
   className?: string;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+  const { ingredients, loading } = useFilterIngredients();
+
+  const defaultItems = ingredients.map((ingredient) => ({
+    value: ingredient.name,
+    text: ingredient.name,
+  }));
+
   return (
     <div className={cn("", className)}>
       <Title text="Filter" size="sm" className="mb-5 font-bold" />
@@ -39,30 +48,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
           title="Ingridients"
           className="mt-5"
           limit={6}
-          defaultItems={[
-            { text: "cheese", value: "1" },
-            { text: "mozarela", value: "2" },
-            { text: "chesnok", value: "3" },
-            { text: "ohirok", value: "4" },
-            { text: "tomatos", value: "5" },
-            { text: "meat", value: "6" },
-          ]}
-          items={[
-            { text: "cheese", value: "1" },
-            { text: "mozarela", value: "2" },
-            { text: "chesnok", value: "3" },
-            { text: "ohirok", value: "4" },
-            { text: "tomatos", value: "5" },
-            { text: "meat", value: "6" },
-            { text: "chesnok", value: "3" },
-            { text: "ohirok", value: "4" },
-            { text: "tomatos", value: "5" },
-            { text: "meat", value: "6" },
-            { text: "chesnok", value: "3" },
-            { text: "ohirok", value: "4" },
-            { text: "tomatos", value: "5" },
-            { text: "meat", value: "6" },
-          ]}
+          defaultItems={defaultItems.slice(0, 6)}
+          items={defaultItems}
+          loading={loading}
         />
       </div>
     </div>
