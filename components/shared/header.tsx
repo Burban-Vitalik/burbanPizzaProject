@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Container } from "./container";
 import { Button } from "../ui";
 import { ArrowRight, ShoppingCart, User } from "lucide-react";
+import { SearchInput } from "./search-input";
 
 interface Props {
   className?: string;
@@ -19,6 +20,10 @@ export const Header: React.FC<Props> = ({ className }) => {
             <h1 className="text-2xl uppercase font-black">Burban Pizza</h1>
             <p className="text-sm text-gray-400 leading-3">Hmmm. Delicious</p>
           </div>
+        </div>
+
+        <div className="mx-10 flex-1">
+          <SearchInput />
         </div>
 
         {/* Right side */}
