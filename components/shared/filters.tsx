@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState } from "react";
 import { Title } from "./title";
 import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui";
@@ -12,9 +12,26 @@ interface Props {
   className?: string;
 }
 
+interface PriceProps {
+  priceFrom: number;
+  priceTo: number;
+}
+
 export const Filters: React.FC<Props> = ({ className }) => {
   const { ingredients, loading, onAddIds, selectedIds } =
     useFilterIngredients();
+
+  const [prices, setPrices] = useState<PriceProps>({
+    priceFrom: 0,
+    priceTo: 1000,
+  });
+
+  const updatePrice = (name: keyof PriceProps, value: number) => {
+    setPrices({
+      ...prices,
+      [name]: value,
+    });
+  };
 
   const defaultItems = ingredients.map((ingredient) => ({
     value: String(ingredient.id),
@@ -39,12 +56,30 @@ export const Filters: React.FC<Props> = ({ className }) => {
             type="number"
             placeholder="0"
             min={0}
+            step={10}
             max={1000}
-            defaultValue={0}
+            value={String(prices.priceFrom)}
+            onChange={(e) => updatePrice("priceFrom", Number(e.target.value))}
           />
-          <Input type="number" min={100} max={1000} placeholder="1000" />
+          <Input
+            type="number"
+            min={100}
+            max={1000}
+            step={10}
+            placeholder="1000"
+            value={String(prices.priceTo)}
+            onChange={(e) => updatePrice("priceTo", Number(e.target.value))}
+          />
         </div>
-        <RangeSlider min={0} max={5000} step={10} value={[0, 5000]} />
+        <RangeSlider
+          min={0}
+          max={1000}
+          step={10}
+          value={[prices.priceFrom, prices.priceTo]}
+          onValueChange={([priceFrom, priceTo]) =>
+            setPrices({ priceFrom, priceTo })
+          }
+        />
         <CheckBoxFiltersGroup
           title="Ingridients"
           className="mt-5"
