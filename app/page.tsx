@@ -1,14 +1,28 @@
 import { Container, Title, TopBar } from "@/components/shared";
 import { Filters } from "@/components/shared/filters";
 import { ProductsListGroup } from "@/components/shared/products-list-group";
+import { prisma } from "@/prisma/prisma-client";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await prisma.category.findMany({
+    include: {
+      products: {
+        include: { ingridients: true, items: true },
+      },
+    },
+  });
+
+  console.log("categories", categories[0]);
   return (
     <>
       <Container>
         <Title text="Всі піци" size="lg" className="font-extrabold" />
       </Container>
-      <TopBar />
+      <TopBar
+        categories={categories.filter(
+          (category) => category.products.length > 0
+        )}
+      />
 
       <Container className="pb-14 mt-10">
         <div className="flex gap-[60px]">
@@ -20,147 +34,18 @@ export default function Home() {
           {/* List products */}
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              <ProductsListGroup
-                listClassName={""}
-                categoryId={1}
-                items={[
-                  {
-                    id: "1",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "2",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "3",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "4",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "5",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                ]}
-                title={"Pizzas"}
-              />
-              <ProductsListGroup
-                listClassName={""}
-                categoryId={2}
-                items={[
-                  {
-                    id: "6",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "7",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "8",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "9",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "10",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                ]}
-                title={"Combo"}
-              />
-              <ProductsListGroup
-                listClassName={""}
-                categoryId={3}
-                items={[
-                  {
-                    id: "6",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "7",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "8",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "9",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                  {
-                    id: "10",
-                    name: "Diabolla",
-                    imageUrl:
-                      "https://la.ua/wp-content/uploads/2022/04/dzhavelinajavelina-1.webp",
-                    price: 330,
-                    items: [{ price: 330 }],
-                  },
-                ]}
-                title={"zakuski"}
-              />
+              {categories.map(
+                (category) =>
+                  category.products.length > 0 && (
+                    <ProductsListGroup
+                      key={category.id}
+                      listClassName={""}
+                      categoryId={category.id}
+                      items={category.products}
+                      title={category.name}
+                    />
+                  )
+              )}
             </div>
           </div>
         </div>
