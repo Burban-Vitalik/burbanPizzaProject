@@ -1,52 +1,64 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React from "react";
 import { Title } from "./title";
-import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui";
 import { RangeSlider } from "./range-slider";
 import { CheckBoxFiltersGroup } from "./checkbox-filters-group";
-import { useFilterIngredients } from "@/hooks/useFilterIngridients";
-
+import { useFilters, useIngredients, useQueryFilters } from "@/hooks";
 interface Props {
   className?: string;
 }
-
 interface PriceProps {
-  priceFrom: number;
-  priceTo: number;
+  priceFrom?: number;
+  priceTo?: number;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-  const { ingredients, loading, onAddIds, selectedIds } =
-    useFilterIngredients();
+  const { loading, ingredients } = useIngredients();
+  const filters = useFilters();
 
-  const [prices, setPrices] = useState<PriceProps>({
-    priceFrom: 0,
-    priceTo: 1000,
-  });
+  useQueryFilters(filters);
 
-  const updatePrice = (name: keyof PriceProps, value: number) => {
-    setPrices({
-      ...prices,
-      [name]: value,
-    });
-  };
-
-  const defaultItems = ingredients.map((ingredient) => ({
+  const items = ingredients.map((ingredient) => ({
     value: String(ingredient.id),
     text: ingredient.name,
   }));
+
+  const updatePrices = (prices: number[]) => {
+    filters.setPrices("priceFrom", prices[0]);
+    filters.setPrices("priceTo", prices[1]);
+  };
 
   return (
     <div className={cn("", className)}>
       <Title text="Filter" size="sm" className="mb-5 font-bold" />
 
       {/* Top checkboxes */}
-      <div className="flex flex-col gap-4">
-        <FilterCheckbox text="Можна збирати" value="1" />
-        <FilterCheckbox text="Новинки" value="2" />
-      </div>
+      <CheckBoxFiltersGroup
+        title="Types"
+        name="pizzaTypes"
+        className="mb-5"
+        onClickCheckbox={filters.setPizzaTypes}
+        selected={filters.pizzaTypes}
+        items={[
+          { text: "Thin", value: "1" },
+          { text: "Traditional", value: "2" },
+        ]}
+      />
+
+      <CheckBoxFiltersGroup
+        title="Sizes"
+        name="sizes"
+        className="mb-5"
+        onClickCheckbox={filters.setSizes}
+        selected={filters.sizes}
+        items={[
+          { text: "20cm", value: "20" },
+          { text: "30cm", value: "30" },
+          { text: "40cm", value: "40" },
+        ]}
+      />
 
       {/* Price filter */}
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
@@ -58,8 +70,10 @@ export const Filters: React.FC<Props> = ({ className }) => {
             min={0}
             step={10}
             max={1000}
-            value={String(prices.priceFrom)}
-            onChange={(e) => updatePrice("priceFrom", Number(e.target.value))}
+            value={String(filters.prices.priceFrom || 0)}
+            onChange={(e) =>
+              filters.setPrices("priceFrom", Number(e.target.value))
+            }
           />
           <Input
             type="number"
@@ -67,28 +81,31 @@ export const Filters: React.FC<Props> = ({ className }) => {
             max={1000}
             step={10}
             placeholder="1000"
-            value={String(prices.priceTo)}
-            onChange={(e) => updatePrice("priceTo", Number(e.target.value))}
+            value={String(filters.prices.priceTo || 0)}
+            onChange={(e) =>
+              filters.setPrices("priceTo", Number(e.target.value))
+            }
           />
         </div>
         <RangeSlider
           min={0}
           max={1000}
           step={10}
-          value={[prices.priceFrom, prices.priceTo]}
-          onValueChange={([priceFrom, priceTo]) =>
-            setPrices({ priceFrom, priceTo })
-          }
+          value={[
+            filters.prices.priceFrom || 0,
+            filters.prices.priceTo || 1000,
+          ]}
+          onValueChange={updatePrices}
         />
         <CheckBoxFiltersGroup
           title="Ingridients"
           className="mt-5"
           limit={6}
-          defaultItems={defaultItems.slice(0, 6)}
-          items={defaultItems}
+          defaultItems={items.slice(0, 6)}
+          items={items}
           loading={loading}
-          onClickCheckbox={onAddIds}
-          selectedIds={selectedIds}
+          onClickCheckbox={filters.setSelectedIngredients}
+          selected={filters.selectedIngredients}
           name="ingredients"
         />
       </div>
