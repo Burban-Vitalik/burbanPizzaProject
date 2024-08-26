@@ -1,6 +1,6 @@
 import { Container, Title } from "@/components/shared";
 import { GroupVariants } from "@/components/shared/group-variant";
-import { ProductImage } from "@/components/shared/product-image";
+import { PizzaImage } from "@/components/shared/pizza-image";
 import { prisma } from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 
@@ -14,7 +14,7 @@ const ProductPage = async ({ params: { id } }: { params: { id: string } }) => {
   return (
     <Container className="flex flex-col my-10">
       <div className="flex flex-1">
-        <ProductImage imageUrl={product.imageUrl} size={30} />
+        <PizzaImage imageUrl={product.imageUrl} size={30} />
         <div className="w-[490px] bg-[#FCFCFC] p-7">
           <Title
             text={product.name}
@@ -29,7 +29,6 @@ const ProductPage = async ({ params: { id } }: { params: { id: string } }) => {
               { value: "2", name: "Medium" },
               { value: "3", name: "Large", disabled: true },
             ]}
-            // onClick={(}
           />
         </div>
       </div>
