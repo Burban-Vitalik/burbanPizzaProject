@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { Title } from "./title";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { ProductCard } from "./product-card";
 import { useIntersection } from "react-use";
 import { useCategoryStore } from "@/app/store/category";

@@ -1,5 +1,5 @@
-import { ChooseProductModal, Container } from "@/components/shared";
-import { ChooseProductForm } from "@/components/shared/choose-product-form";
+import { ChooseProductModal, Container } from "@/shared/components/shared";
+import { ChooseProductForm } from "@/shared/components/shared/choose-product-form";
 import { prisma } from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 

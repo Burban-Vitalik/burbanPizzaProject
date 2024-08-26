@@ -1,11 +1,11 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import React from "react";
 import { Title } from "./title";
 import { Input } from "../ui";
 import { RangeSlider } from "./range-slider";
 import { CheckBoxFiltersGroup } from "./checkbox-filters-group";
-import { useFilters, useIngredients, useQueryFilters } from "@/hooks";
+import { useFilters, useIngredients, useQueryFilters } from "@/shared/hooks";
 interface Props {
   className?: string;
 }
